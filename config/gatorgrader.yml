@@ -1,0 +1,35 @@
+---
+name: Assignment
+break: true
+fastfail: false
+indent: 4
+version: v1.1.0
+startup: poetry install
+---
+
+# Check for TODOs
+writing/reflection.md:
+    --description "Complete all TODOs in writing/reflection.md" MatchFileFragment --fragment TODO --count 0 --exact
+term_context_cookbook.py:
+    --description "Complete all TODOs in term_context_cookbook.py" MatchFileFragment --fragment TODO --count 0 --exact
+
+# Check for procedure definitions
+term_context_cookbook.py:
+    --description "Define `read_file` procedure in term_context_cookbook.py" MatchFileFragment --fragment "def read_file()" --count 1 --exact
+    --description "Define `group_char_data_into_words` procedure in term_context_cookbook.py" MatchFileFragment --fragment "def group_char_data_into_words()" --count 1 --exact
+    --description "Define `gather_contexts_from_words` procedure in term_context_cookbook.py" MatchFileFragment --fragment "def gather_contexts_from_words()" --count 1 --exact
+    --description "Define `print_contexts` procedure in term_context_cookbook.py" MatchFileFragment --fragment "def print_contexts()" --count 1 --exact
+
+# Check test cases
+--description "Make test_read_file_gets_char_data pass" ExecuteCommand --command "poetry run pytest -k test_read_file_gets_char_data" 
+--description "Make test_group_char_data_into_words_forms_words pass" ExecuteCommand --command "poetry run pytest -k test_group_char_data_into_words_forms_words" 
+--description "Make test_gather_contexts_from_words_handles_constraints pass" ExecuteCommand --command "poetry run pytest -k test_gather_contexts_from_words_handles_constraints" 
+--description "Make test_print_contexts_displays_input pass" ExecuteCommand --command "poetry run pytest -k test_print_contexts_displays_input" 
+--description "Make test_print_contexts_displays_contexts pass" ExecuteCommand --command "poetry run pytest -k test_print_contexts_displays_contexts" 
+--description "Make all 13 test cases pass" MatchCommandFragment --command "poetry run pytest -v | grep 'PASSED \['" --fragment "PASSED" --count 13 --exact
+
+
+
+
+
+
